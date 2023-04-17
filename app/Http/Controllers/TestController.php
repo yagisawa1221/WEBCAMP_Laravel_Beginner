@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\TestPostRequest;
 
+
 class TestController extends Controller
 {
     /**
@@ -17,22 +18,21 @@ class TestController extends Controller
     {
         return view('test.index');
     }
-    
+
     /**
      * 入力を受け取る
      * 
      * @return \Illuminate\View\View
      */
-    public function input(Request $request)
+    public function input(TestPostRequest $request)
     {
         // validate済
+
+        // データの取得
+        $validatedData = $request->validated();
+
+        //var_dump($validatedData); exit;
         
-        //データの取得
-        $validateData = $request->validate();
-        
-        // 
-        var_dump($email,$pass); exit;
-        
-        // return view('test.input');
+        return view('test.input', ['datum' => $validatedData]);
     }
 }
