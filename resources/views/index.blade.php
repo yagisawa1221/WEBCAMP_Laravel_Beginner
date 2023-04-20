@@ -10,7 +10,7 @@
             @endforeach
             </div>
         @endif
-        <form action="/test/input" method="post">
+        <form action="/login" method="post">
             @csrf
             email：<input name="email" value="{{old('email')}}"><br>
             パスワード：<input  name="password" type="password"><br>
