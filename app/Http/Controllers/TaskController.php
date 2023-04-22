@@ -258,19 +258,16 @@ var_dump($sql);
         // ヘッダを書き込む
         $file->fputcsv(array_values($data_list));
         // CSVをファイルに書き込む(出力する)
-        foreach($list as $datum) {
+       foreach($list as $datum) {
             $awk = []; // 作業領域の確保
             // $data_listに書いてある順番に、書いてある要素だけを $awkに格納する
             foreach($data_list as $k => $v) {
-                if ($k === 'priority') {
-                    $awk[] = $datum->getPriorityString();
-                } else {
-                    $awk[] = $datum->$k;
-                }
+                $awk[] = $datum->$k;
             }
             // CSVの1行を出力
             $file->fputcsv($awk);
         }
+
 
         // 現在のバッファの中身を取得し、出力バッファを削除する
         $csv_string = ob_get_clean();
@@ -278,11 +275,12 @@ var_dump($sql);
         // 文字コードを変換する
         $csv_string_sjis = mb_convert_encoding($csv_string, 'SJIS', 'UTF-8');
         
+        
         // ダウンロードファイル名の作成
         $download_filename = 'task_list.' . date('Ymd') . '.csv';
         // CSVを出力する
         return response($csv_string_sjis)
                 ->header('Content-Type', 'text/csv')
                 ->header('Content-Disposition', 'attachment; filename="' . $download_filename . '"');
-    
+    }
 }
